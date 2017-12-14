@@ -65,4 +65,4 @@ function calendar(state= initialCalendarState,action){
 	}
 }
 
-export defautl calendar;
+export default calendar;
