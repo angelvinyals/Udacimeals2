@@ -3,6 +3,18 @@ import {
 	REMOVE_FROM_CALENDAR,
 } from '../actions'
 
+function food(state={},action){
+	switch(action.type){
+		case ADD_RECIPE:
+			const { recipe } = action
+
+			return{
+				...state,
+				[recipe.label]: recipe
+			}
+	}
+}
+
 const initialCalendarState ={
 	monday: {
 		breakfast: null,
