@@ -4,13 +4,17 @@ import {addRecipe} from '../../actions'
 import './App.css';
 
 class App extends Component {
+
+	
+
 	state ={
-		calendar: null
+		calendar: null,
+		inputValue: '',
+		value:''
 	}
 
 	componentDidMount(){
 		const {store} = this.props
-
 		store.subscribe(() =>{
 			this.setState(() => ({
 				calendar: store.getState()
@@ -19,16 +23,26 @@ class App extends Component {
 		
 	}
 
+	
 
-	submitFood =() =>{
-		this.props.store.dispatch(addRecipe({
+	handleChange = (event) =>{	
+		this.setState({inputValue:  event.target.value})
+	}
+
+	submitFood = (e) =>{
+		const {store} = this.props
+		console.log(`event: ${e}`)
+		store.dispatch(addRecipe({
 			day: 'monday',
 			meal: 'breakfast',
 			recipe:{
-				label: this.input.value
+				label: this.state.inputValue
 			}
 		}))
-		this.input.value =''
+		this.setState({inputValue: ''})
+		
+		e.preventDefault()
+		
 	}
 
 	render() {
@@ -36,14 +50,14 @@ class App extends Component {
 				//console.log(this.props.store.dispatch(receiveComment('Redux is great!')));
 		return (
 		  <div className="App">
-		    <input
-		    	type='text'
-		    	ref={(input) => this.input = input}
-		    />
-		    <button
-		    	onClick={this.submitFood}>
-		    submit
-		    </button>
+		  	<form>
+			  <label>
+			    recipe for monday's breakfast
+			    <input type="text" value={this.state.inputValue} onChange={this.handleChange} />
+			  </label>
+			  <input type="submit"  onClick={this.submitFood} />
+			</form>
+		    
 		    <pre>
 		    	Esmorzar del dilluns: {this.state.calendar && this.state.calendar.monday.breakfast}
 		    </pre>
@@ -53,3 +67,18 @@ class App extends Component {
 }
 
 export default App;
+
+
+/*
+
+
+<input
+		    	type='text'
+		    	ref={(input) => this.input = input}
+		    />
+		    <button
+		    	onClick={this.submitFood}>
+		    submit
+		    </button>
+
+		    */
