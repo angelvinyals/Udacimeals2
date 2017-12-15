@@ -15,19 +15,19 @@ class App extends Component {
 	}
 }
 
-function mapStateToProps(state){
-	console.log(`calendar: ${state}`)
+function mapStateToProps({calendar, food}){
+	console.log(`calendar: ${calendar}`)
 	let days=[]
-	for(let day in state){
+	for(let day in calendar){
 		days.push(day) 
 	}
 	console.log(`days: ${days}`)
 	return {
 		calendar: days.map((day) =>({
 			day,
-			meals: Object.keys(state[day]).reduce((meals, meal) =>{
-						meals[meal] = state[day][meal]
-						? state[day][meal]
+			meals: Object.keys(calendar[day]).reduce((meals, meal) =>{
+						meals[meal] = calendar[day][meal]
+						? calendar[day][meal]
 						: null
 						return meals
 					},{})
